@@ -9,7 +9,9 @@ dotenv.config({
 const app = express();
 
 app.get('/', (req, res) => {
-  res.json({ name: 'John Doe' });
+  res.status(400).json({
+    success: false,
+  });
 });
 
 const PORT = process.env.PORT || 5000;
