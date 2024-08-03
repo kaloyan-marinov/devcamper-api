@@ -10,8 +10,5 @@ npm run dev
 ```
 
 ```bash
-http localhost:5000
-
-# status code: 404
-# "Cannot GET /"
+http localhost:5000/api/bootcamps
 ```

@@ -8,9 +8,10 @@ dotenv.config({
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.status(400).json({
-    success: false,
+app.get('/api/v1/bootcamps', (req, res) => {
+  res.status(200).json({
+    success: true,
+    msg: 'Show all bootcamps',
   });
 });
 
