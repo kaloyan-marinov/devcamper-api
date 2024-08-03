@@ -12,8 +12,9 @@ dotenv.config({
 const app = express();
 
 const logger = (req, res, next) => {
-  req.hello = 'hello world';
-  console.log('middleware finished running');
+  console.log(
+    `${req.method} ${req.protocol}://${req.get('host')}${req.originalUrl}`
+  );
 
   // Instruct this middleware to move on to the next middleware.
   next();
