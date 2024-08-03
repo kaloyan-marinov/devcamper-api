@@ -9,7 +9,7 @@ dotenv.config({
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send({ name: 'John Doe' });
+  res.json({ name: 'John Doe' });
 });
 
 const PORT = process.env.PORT || 5000;
