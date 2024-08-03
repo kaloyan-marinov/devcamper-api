@@ -11,6 +11,16 @@ dotenv.config({
 
 const app = express();
 
+const logger = (req, res, next) => {
+  req.hello = 'hello world';
+  console.log('middleware finished running');
+
+  // Instruct this middleware to move on to the next middleware.
+  next();
+};
+
+app.use(logger);
+
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
 
