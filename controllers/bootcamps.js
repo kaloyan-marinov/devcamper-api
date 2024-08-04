@@ -1,3 +1,5 @@
+const Bootcamp = require('../models/Bootcamp');
+
 /*
 Basically, the symbols defined in this file are *middleware functions*.
 
@@ -30,6 +32,8 @@ exports.getBootcamp = (req, res, next) => {
 // @route     POST /api/v1/bootcamp
 // @access    Private
 exports.createBootcamp = (req, res, next) => {
+  console.log(req.body);
+
   res.status(201).json({
     success: true,
     msg: 'Create new bootcamp',
