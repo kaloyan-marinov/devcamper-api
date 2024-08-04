@@ -108,7 +108,9 @@ const BootcampSchema = new mongoose.Schema({
 // (Here it is important to not use an arrow function
 // but a regular function.)
 BootcampSchema.pre('save', function (next) {
-  console.log('slugify ran', this.name);
+  this.slug = slugify(this.name, {
+    lower: true,
+  });
 
   next();
 });
