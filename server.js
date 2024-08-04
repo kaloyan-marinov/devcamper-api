@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
+const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
 // Load environment variables from a file on disk.
@@ -26,7 +27,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount routers
+// (
+// Important: B/c middleware functions are executed in a linear order,
+//            the `errorHandler` has to be `app.use`d after the "routesBootcamps"
+//            (in order for the latter to be able to use the former).
+// )
 app.use('/api/v1/bootcamps', bootcamps);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
