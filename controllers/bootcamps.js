@@ -81,9 +81,14 @@ exports.updateBootcamp = async (req, res, next) => {
     });
 
     if (!bootcamp) {
-      return res.status(404).json({
-        success: false,
-      });
+      // The value in `req.params.id` has the format of an `ObjectId`,
+      // but the database doesn't contain an object with that ID.
+      const errorReponse = new ErrorResponse(
+        `Bootcamp not found with id of ${req.params.id}`,
+        404
+      );
+
+      return next(errorReponse);
     }
 
     res.status(200).json({
@@ -103,9 +108,14 @@ exports.deleteBootcamp = async (req, res, next) => {
     const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
 
     if (!bootcamp) {
-      return res.status(404).json({
-        success: false,
-      });
+      // The value in `req.params.id` has the format of an `ObjectId`,
+      // but the database doesn't contain an object with that ID.
+      const errorReponse = new ErrorResponse(
+        `Bootcamp not found with id of ${req.params.id}`,
+        404
+      );
+
+      return next(errorReponse);
     }
 
     res.status(200).json({
