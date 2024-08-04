@@ -52,12 +52,7 @@ exports.getBootcamp = async (req, res, next) => {
     });
   } catch (err) {
     // The value in `req.params.id` does not have the format of an `ObjectId`.
-    const errorReponse = new ErrorResponse(
-      `Bootcamp not found with id of ${req.params.id}`,
-      404
-    );
-
-    next(errorReponse);
+    next(err);
   }
 };
 
