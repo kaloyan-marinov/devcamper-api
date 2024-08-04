@@ -11,11 +11,19 @@ and, as such, has access to the `req` and `res` objects (as well as to `next`).
 // @desc      Get all bootcamps
 // @route     GET /api/v1/bootcamps
 // @access    Public
-exports.getBootcamps = (req, res, next) => {
-  res.status(200).json({
-    success: true,
-    msg: 'Show all bootcamps',
-  });
+exports.getBootcamps = async (req, res, next) => {
+  try {
+    const bootcamps = await Bootcamp.find();
+
+    res.status(200).json({
+      success: true,
+      data: bootcamps,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+    });
+  }
 };
 
 // @desc      Get single bootcamps
