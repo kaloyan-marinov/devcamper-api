@@ -5,6 +5,9 @@ NODE_ENV=development
 PORT=
 
 MONGO_URI= # Go to the cluster in your `cloud.mongodb.com` account, click on "Connect" and paste the connection string from there into this environment variable.
+
+GEOCODER_PROVIDER=
+GEOCODER_API_KEY=
 ```
 
 ```bash
