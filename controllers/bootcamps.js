@@ -71,10 +71,21 @@ exports.createBootcamp = async (req, res, next) => {
 // @desc      Update bootcamp
 // @route     PUT /api/v1/bootcamps/:id
 // @access    Private
-exports.updateBootcamp = (req, res, next) => {
+exports.updateBootcamp = async (req, res, next) => {
+  const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+    new: true, // Causes the response to contain the updated JSON (document).
+    runValidators: true,
+  });
+
+  if (!bootcamp) {
+    return res.status(404).json({
+      success: false,
+    });
+  }
+
   res.status(200).json({
     success: true,
-    msg: `Update bootcamp ${req.params.id}`,
+    data: bootcamp,
   });
 };
 
