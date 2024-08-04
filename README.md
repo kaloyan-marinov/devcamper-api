@@ -3,6 +3,8 @@ create a `config/config.env` file that has the following structure:
 ```bash
 NODE_ENV=development
 PORT=
+
+MONGO_URI= # Go to the cluster in your `cloud.mongodb.com` account, click on "Connect" and paste the connection string from there into this environment variable.
 ```
 
 ```bash
