@@ -28,6 +28,8 @@ http 'localhost:5000/api/v1/bootcamps?careers[in]=Business'
 http 'localhost:5000/api/v1/bootcamps?select=name,description'
 http 'localhost:5000/api/v1/bootcamps?select=name,housing&sort=name'
 http 'localhost:5000/api/v1/bootcamps?select=name,housing&sort=-name'
+http 'localhost:5000/api/v1/bootcamps?select=name&limit=2'
+http 'localhost:5000/api/v1/bootcamps?select=name&limit=2&page=2'
 
 http localhost:5000/api/v1/bootcamps/17
 http \
