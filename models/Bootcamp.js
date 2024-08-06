@@ -124,7 +124,7 @@ BootcampSchema.pre('save', async function (next) {
   // Construct a GeoJSON object
   this.location = {
     type: 'Point',
-    coordinates: [loc[0].longitude, loc[0].latitude],
+    coordinates: [loc[0].longitude, loc[0].latitude], // NB: this order is unusual but expected by Mongoose!
     formattedAddress: loc[0].formattedAddress,
     street: loc[0].streetName,
     city: loc[0].city,
