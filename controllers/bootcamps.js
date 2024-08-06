@@ -17,15 +17,38 @@ and, as such, has access to the `req` and `res` objects (as well as to `next`).
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
   let query;
 
-  let queryStr = JSON.stringify(req.query);
+  // Create a copy of `req.query`
+  const reqQuery = { ...req.query };
 
+  // Fields to exclude (from use-for-filtering)
+  const removeFields = ['select'];
+
+  // Loop over `removeFields` and delete them from `reqQuery`
+  removeFields.forEach((param) => {
+    delete reqQuery[param];
+  });
+
+  console.log(reqQuery);
+
+  // Create query string
+  let queryStr = JSON.stringify(reqQuery);
+
+  // Create Mongoose operators (such as `$gt`, `$gte`, etc.)
   queryStr = queryStr.replace(
     /\b(gt|gte|lt|lte|in)\b/g,
     (match) => `$${match}`
   );
 
+  // Create query for finding resources
   query = Bootcamp.find(JSON.parse(queryStr));
 
+  // Select fields
+  if (req.query.select) {
+    const fields = req.query.select.split(',');
+    query = query.select(fields);
+  }
+
+  // Execute query
   const bootcamps = await query;
 
   res.status(200).json({

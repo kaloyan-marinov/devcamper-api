@@ -25,6 +25,7 @@ http localhost:5000/api/v1/bootcamps
 http 'localhost:5000/api/v1/bootcamps?location.state=MA&housing=true'
 http 'localhost:5000/api/v1/bootcamps?averageCost[lt]=10000'
 http 'localhost:5000/api/v1/bootcamps?careers[in]=Business'
+http 'localhost:5000/api/v1/bootcamps?select=name,description'
 
 http localhost:5000/api/v1/bootcamps/17
 http \
