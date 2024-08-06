@@ -21,7 +21,7 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
   const reqQuery = { ...req.query };
 
   // Fields to exclude (from use-for-filtering)
-  const removeFields = ['select'];
+  const removeFields = ['select', 'sort'];
 
   // Loop over `removeFields` and delete them from `reqQuery`
   removeFields.forEach((param) => {
@@ -39,13 +39,22 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
     (match) => `$${match}`
   );
 
-  // Create query for finding resources
+  // Build query in steps.
+  //  1) Create query for finding resources
   query = Bootcamp.find(JSON.parse(queryStr));
 
-  // Select fields
+  //  2) Select fields
   if (req.query.select) {
     const fields = req.query.select.split(',');
     query = query.select(fields);
+  }
+
+  //  3) Sort
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('-createdAt');
   }
 
   // Execute query
