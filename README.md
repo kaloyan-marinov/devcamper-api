@@ -10,6 +10,12 @@ GEOCODER_PROVIDER=
 GEOCODER_API_KEY=
 ```
 
+Seed hardcoded data into the database:
+
+```bash
+node seeder.js -i
+```
+
 ```bash
 npm run dev
 ```
@@ -33,4 +39,10 @@ http \
   acceptGi:=true
 http PUT localhost:5000/api/v1/bootcamps/17
 http DELETE localhost:5000/api/v1/bootcamps/17
+```
+
+Delete all data from the database:
+
+```bash
+node seeder.js -d
 ```
