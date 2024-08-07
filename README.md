@@ -50,6 +50,10 @@ http PUT localhost:5000/api/v1/bootcamps/17
 http DELETE localhost:5000/api/v1/bootcamps/17
 ```
 
+```bash
+http localhost:5000/api/v1/courses
+```
+
 Delete all data from the database:
 
 ```bash
