@@ -52,6 +52,7 @@ http DELETE localhost:5000/api/v1/bootcamps/17
 
 ```bash
 http localhost:5000/api/v1/courses
+http localhost:5000/api/v1/bootcamps/5d713995b721c3bb38c1f5d0/courses
 ```
 
 Delete all data from the database:
