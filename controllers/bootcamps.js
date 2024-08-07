@@ -157,7 +157,7 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 // @route     DELETE /api/v1/bootcamps/:id
 // @access    Private
 exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id);
 
   if (!bootcamp) {
     // The value in `req.params.id` has the format of an `ObjectId`,
@@ -169,6 +169,11 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
 
     return next(errorReponse);
   }
+
+  // await bootcamp.remove();
+  // According to https://stackoverflow.com/a/76449387 ,
+  // the preceding call is deprecated, so:
+  await bootcamp.deleteOne();
 
   res.status(200).json({
     success: true,

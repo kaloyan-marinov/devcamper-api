@@ -145,6 +145,21 @@ BootcampSchema.pre('save', async function (next) {
   next();
 });
 
+// Cascade delete courses when a bootcamp is deleted
+BootcampSchema.pre(
+  'deleteOne',
+  { document: true, query: false }, // Added on suggestion by https://github.com/Automattic/mongoose/issues/7538#issuecomment-505275691
+  async function (next) {
+    console.log(`Courses being removed from bootcamp ${this._id}`);
+
+    await this.model('Course').deleteMany({
+      bootcamp: this._id,
+    });
+
+    next();
+  }
+);
+
 // Reverse populate with virtuals (aka virtual attributes)
 BootcampSchema.virtual('courses', {
   ref: 'Course',
