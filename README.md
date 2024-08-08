@@ -65,7 +65,13 @@ http \
   -f \
   PUT \
   localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
-  cv@<path-to-some-image-file-on-your-device>
+  file@<path-to-some-NON-image-file-on-your-device>
+
+http \
+  -f \
+  PUT \
+  localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
+  file@<path-to-some-image-file-on-your-device>
 ```
 
 Delete all data from the database:
