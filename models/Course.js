@@ -38,4 +38,40 @@ const CourseSchema = new mongoose.Schema({
   },
 });
 
+// Static method to get average of course tuitions
+// [across all courses in a specific bootcamp]
+CourseSchema.statics.getAverageCost = async function (bootcampId) {
+  console.log('Calculating average cost...'.blue);
+
+  const objects = await this.aggregate([
+    {
+      $match: { bootcamp: bootcampId },
+    },
+    {
+      $group: {
+        _id: '$bootcamp',
+        averageCost: {
+          $avg: '$tuition', // The field we want to average over
+        },
+      },
+    },
+  ]);
+
+  console.log(objects);
+};
+
+// Call getAverageCost after save
+CourseSchema.post('save', function () {
+  this.constructor.getAverageCost(this.bootcamp);
+});
+
+// Call getAverageCost before remove
+CourseSchema.pre(
+  'deleteOne',
+  { document: true, query: false }, // Added on suggestion by https://github.com/Automattic/mongoose/issues/7538#issuecomment-505275691,
+  function () {
+    this.constructor.getAverageCost(this.bootcamp);
+  }
+);
+
 module.exports = mongoose.model('Course', CourseSchema);
