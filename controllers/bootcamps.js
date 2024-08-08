@@ -1,3 +1,4 @@
+const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const geocoder = require('../utils/geocoder');
@@ -252,6 +253,10 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
 
     return next(errorResponse);
   }
+
+  // Create custom filename in such a way that guarantees that
+  // the custom filename will be unique across all uploaded bootcamp photos
+  file.name = `photo_${bootcamp._id}${path.parse(file.name).ext}`;
 
   res.status(400).json({
     success: false,
