@@ -8,6 +8,9 @@ MONGO_URI= # Go to the cluster in your `cloud.mongodb.com` account, click on "Co
 
 GEOCODER_PROVIDER=
 GEOCODER_API_KEY=
+
+FILE_UPLOAD_PATH=
+MAX_FILE_UPLOAD= # In bytes.
 ```
 
 Seed hardcoded data into the database:
