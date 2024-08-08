@@ -87,4 +87,11 @@ http \
   PUT \
   localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
   file@<path-to-some-image-file-on-your-device>
+
+# At this point,
+# copy the filename returned by the last request to the clipboard;
+# open a web browser;
+# enter the following in the address bar:
+# http://localhost:5000/uploads/<paste-the-copied-filename> ;
+# and load that page in the browser.
 ```
