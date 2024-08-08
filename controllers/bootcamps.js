@@ -258,10 +258,22 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
   // the custom filename will be unique across all uploaded bootcamp photos
   file.name = `photo_${bootcamp._id}${path.parse(file.name).ext}`;
 
-  res.status(400).json({
-    success: false,
-    data: {
-      msg: 'this endpoint is still under construction',
-    },
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+    if (err) {
+      console.error(err);
+
+      const errorResponse = new ErrorResponse('Problem with file upload', 500);
+
+      return next(errorResponse);
+    }
+
+    await Bootcamp.findByIdAndUpdate(req.params.id, {
+      photo: file.name,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: file.name,
+    });
   });
 });

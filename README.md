@@ -1,4 +1,4 @@
-create a `config/config.env` file that has the following structure:
+1. create a `config/config.env` file that has the following structure:
 
 ```bash
 NODE_ENV=development
@@ -13,15 +13,27 @@ FILE_UPLOAD_PATH=
 MAX_FILE_UPLOAD= # In bytes.
 ```
 
-Seed hardcoded data into the database:
+2. Create a folder at the location stored in the `FILE_UPLOAD_PATH` environment variable
+
+3. Delete all data from the database:
+
+```bash
+node seeder.js -d
+```
+
+4. Seed hardcoded data into the database:
 
 ```bash
 node seeder.js -i
 ```
 
+5. start serving the backend application
+
 ```bash
 npm run dev
 ```
+
+6. issue HTTP requests
 
 ```bash
 http localhost:5000/api/v1/bootcamps
@@ -75,10 +87,4 @@ http \
   PUT \
   localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
   file@<path-to-some-image-file-on-your-device>
-```
-
-Delete all data from the database:
-
-```bash
-node seeder.js -d
 ```
