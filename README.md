@@ -55,6 +55,19 @@ http localhost:5000/api/v1/courses
 http localhost:5000/api/v1/bootcamps/5d713995b721c3bb38c1f5d0/courses
 ```
 
+```bash
+http \
+  -f \
+  PUT \
+  localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo
+
+http \
+  -f \
+  PUT \
+  localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
+  cv@<path-to-some-image-file-on-your-device>
+```
+
 Delete all data from the database:
 
 ```bash
