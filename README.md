@@ -95,3 +95,13 @@ http \
 # http://localhost:5000/uploads/<paste-the-copied-filename> ;
 # and load that page in the browser.
 ```
+
+```bash
+http \
+  POST \
+  localhost:5000/api/v1/auth/register \
+  name="John Doe" \
+  email=john.doe@protonmail.com \
+  password=123456 \
+  role=publisher
+```
