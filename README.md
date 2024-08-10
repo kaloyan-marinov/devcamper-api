@@ -11,6 +11,9 @@ GEOCODER_API_KEY=
 
 FILE_UPLOAD_PATH=
 MAX_FILE_UPLOAD= # In bytes.
+
+JWT_SECRET=
+JWT_EXPIRE=
 ```
 
 2. Create a folder at the location stored in the `FILE_UPLOAD_PATH` environment variable
