@@ -91,8 +91,18 @@ http \
   jobAssistance:=true \
   jobGuarantee:=false \
   acceptGi:=true
-http PUT localhost:5000/api/v1/bootcamps/17
-http DELETE localhost:5000/api/v1/bootcamps/17
+
+export BOOTCAMP_ID=<the-id-of-the-resource-created-by-preceding-request>
+
+http \
+  PUT \
+  localhost:5000/api/v1/bootcamps/${BOOTCAMP_ID} \
+  Authorization:"Bearer ${TKN}"
+
+http \
+  DELETE \
+  localhost:5000/api/v1/bootcamps/${BOOTCAMP_ID} \
+  Authorization:"Bearer ${TKN}"
 ```
 
 ```bash
@@ -104,18 +114,21 @@ http localhost:5000/api/v1/bootcamps/5d713995b721c3bb38c1f5d0/courses
 http \
   -f \
   PUT \
-  localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo
+  localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
+  Authorization:"Bearer ${TKN}"
 
 http \
   -f \
   PUT \
   localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
+  Authorization:"Bearer ${TKN}" \
   file@<path-to-some-NON-image-file-on-your-device>
 
 http \
   -f \
   PUT \
   localhost:5000/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/photo \
+  Authorization:"Bearer ${TKN}" \
   file@<path-to-some-image-file-on-your-device>
 
 # At this point,
