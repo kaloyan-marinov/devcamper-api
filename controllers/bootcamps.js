@@ -77,10 +77,7 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/bootcamps/:id
 // @access    Private
 exports.updateBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
-    new: true, // Causes the response to contain the updated JSON (document).
-    runValidators: true,
-  });
+  let bootcamp = await Bootcamp.findById(req.params.id);
 
   if (!bootcamp) {
     // The value in `req.params.id` has the format of an `ObjectId`,
@@ -92,6 +89,32 @@ exports.updateBootcamp = asyncHandler(async (req, res, next) => {
 
     return next(errorReponse);
   }
+
+  // Make sure user is bootcamp owner
+  // console.log(bootcamp.user.toString());
+  // console.log(req.user.id);
+  // console.log(req.user.role);
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    const errorResponse = new ErrorResponse(
+      `User ${req.user.id} is not authorized to update this bootcamp`,
+      403
+    );
+
+    return next(errorResponse);
+  }
+
+  // The next statement differs from what is used in the tutorial video,
+  // because the video calls `Bootcamp.findOneAndUpdate`;
+  // but calling that method here crashes with
+  // ```
+  // ObjectParameterError: Parameter "filter" to findOneAndUpdate() must be an object, got "66b77899a4fd47e3d3160fb9" (type string)
+  // ```
+  //
+  // console.log(req.body);
+  bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+    new: true, // Causes the response to contain the updated JSON (document).
+    runValidators: true,
+  });
 
   res.status(200).json({
     success: true,
