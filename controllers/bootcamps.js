@@ -139,6 +139,16 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
     return next(errorReponse);
   }
 
+  // Make sure user is bootcamp owner
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    const errorResponse = new ErrorResponse(
+      `User ${req.user.id} is not authorized to delete this bootcamp`,
+      403
+    );
+
+    return next(errorResponse);
+  }
+
   // await bootcamp.remove();
   // According to https://stackoverflow.com/a/76449387 ,
   // the preceding call is deprecated, so:
