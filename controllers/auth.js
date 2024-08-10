@@ -58,6 +58,18 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc      Get current logged in user
+// @route     GET /api/v1/auth/me
+// @access    Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
 // const HOURS_PER_DAY = 24;
 const MINUTES_PER_HOUR = 60;
 const SECONDS_PER_MINUTE = 60;
@@ -89,15 +101,3 @@ const sendTokenResponse = (user, statusCode, res) => {
     token,
   });
 };
-
-// @desc      Get current logged in user
-// @route     GET /api/v1/auth/me
-// @access    Private
-exports.getMe = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
-});
