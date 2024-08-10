@@ -90,14 +90,13 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   // Get reset token
   const resetToken = user.getResetPasswordToken();
 
-  console.log(resetToken);
+  await user.save({
+    validateBeforeSave: false,
+  });
 
-  res.status(417).json({
+  res.status(200).json({
     success: false,
-    data: {
-      msg: 'this endpoint is still under construction',
-      user,
-    },
+    data: user,
   });
 });
 
