@@ -15,6 +15,13 @@ MAX_FILE_UPLOAD= # In bytes.
 JWT_SECRET=
 JWT_EXPIRE=
 JWT_COOKIE_EXPIRE= # Ideally, the application should *treat* this value as *identical to* the amount of time stored in the previous variable.
+
+SMTP_HOST=
+SMTP_PORT=
+SMTP_EMAIL=
+SMTP_PASSWORD=
+FROM_EMAIL=
+FROM_NAME=
 ```
 
 2. Create a folder at the location stored in the `FILE_UPLOAD_PATH` environment variable
