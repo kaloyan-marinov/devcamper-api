@@ -70,6 +70,37 @@ exports.getMe = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc      Forgot password
+// @route     POST /api/v1/auth/forgotpassword
+// @access    Public
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({
+    email: req.body.email,
+  });
+
+  if (!user) {
+    const errorResponse = new ErrorResponse(
+      `There is no user with that email`,
+      404
+    );
+
+    return next(errorResponse);
+  }
+
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  console.log(resetToken);
+
+  res.status(417).json({
+    success: false,
+    data: {
+      msg: 'this endpoint is still under construction',
+      user,
+    },
+  });
+});
+
 // const HOURS_PER_DAY = 24;
 const MINUTES_PER_HOUR = 60;
 const SECONDS_PER_MINUTE = 60;
