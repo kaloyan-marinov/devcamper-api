@@ -16,13 +16,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     role,
   });
 
-  // Create a JWT
-  const token = user.getSignedJwtToken();
-
-  res.status(201).json({
-    success: true,
-    token,
-  });
+  sendTokenResponse(user, 200, res);
 });
 
 // @desc      Login user
@@ -61,11 +55,37 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(errorResponse);
   }
 
+  sendTokenResponse(user, 200, res);
+});
+
+// const HOURS_PER_DAY = 24;
+const MINUTES_PER_HOUR = 60;
+const SECONDS_PER_MINUTE = 60;
+const MILLISECONDS_PER_SECOND = 1000;
+
+// Get token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({
+  const options = {
+    expires: new Date(
+      Date.now() +
+        process.env.JWT_COOKIE_EXPIRE *
+          // HOURS_PER_DAY *
+          MINUTES_PER_HOUR *
+          SECONDS_PER_MINUTE *
+          MILLISECONDS_PER_SECOND
+    ),
+    httpOnly: true, // Only want the cookie to be accessed through the client-side script.
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+
+  res.status(statusCode).cookie('token', token, options).json({
     success: true,
     token,
   });
-});
+};
