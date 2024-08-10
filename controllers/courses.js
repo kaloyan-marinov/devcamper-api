@@ -96,6 +96,16 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
     return next(errorResponse);
   }
 
+  // Make sure user is course owner
+  if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    const errorResponse = new ErrorResponse(
+      `User ${req.user.id} is not authorized to update course ${course._id}`,
+      403
+    );
+
+    return next(errorResponse);
+  }
+
   course = await Course.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -117,6 +127,16 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
     const errorResponse = new ErrorResponse(
       `No course with the ID of ${req.params.id}`,
       404
+    );
+
+    return next(errorResponse);
+  }
+
+  // Make sure user is course owner
+  if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    const errorResponse = new ErrorResponse(
+      `User ${req.user.id} is not authorized to delete course ${course._id}`,
+      403
     );
 
     return next(errorResponse);
