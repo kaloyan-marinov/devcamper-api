@@ -51,10 +51,36 @@ http 'localhost:5000/api/v1/bootcamps?select=name&limit=2'
 http 'localhost:5000/api/v1/bootcamps?select=name&limit=2&page=2'
 
 http localhost:5000/api/v1/bootcamps/17
+```
+
+```bash
+http \
+  POST \
+  localhost:5000/api/v1/auth/register \
+  name="John Doe" \
+  email=john.doe@protonmail.com \
+  password=123456 \
+  role=publisher
+```
+
+```bash
+http \
+  POST \
+  localhost:5000/api/v1/auth/login \
+  email=john.doe@protonmail.com \
+  password=123456
+```
+
+```bash
+export TKN=<token-returned-by-preceding-request>
+```
+
+```bash
 http \
   POST \
   localhost:5000/api/v1/bootcamps \
-  name="Devworks Bootcamp" \
+  Authorization:"Bearer ${TKN}" \
+  name="TEST BOOTCAMP" \
   description="Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer" \
   website="https://devworks.com" \
   phone="(111) 111-1111" \
@@ -98,22 +124,4 @@ http \
 # enter the following in the address bar:
 # http://localhost:5000/uploads/<paste-the-copied-filename> ;
 # and load that page in the browser.
-```
-
-```bash
-http \
-  POST \
-  localhost:5000/api/v1/auth/register \
-  name="John Doe" \
-  email=john.doe@protonmail.com \
-  password=123456 \
-  role=publisher
-```
-
-```bash
-http \
-  POST \
-  localhost:5000/api/v1/auth/login \
-  email=john.doe@protonmail.com \
-  password=123456
 ```
