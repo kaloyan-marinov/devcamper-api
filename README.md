@@ -108,3 +108,11 @@ http \
   password=123456 \
   role=publisher
 ```
+
+```bash
+http \
+  POST \
+  localhost:5000/api/v1/auth/login \
+  email=john.doe@protonmail.com \
+  password=123456
+```
