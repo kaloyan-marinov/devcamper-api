@@ -284,3 +284,10 @@ the backend application will respond to the last request with
 HTTP/1.1 429 Too Many Requests
 # ...
 ```
+
+---
+
+---
+
+protection against <u>HTTP Parameter Pollution</u> attacks is applied
+with the help of https://github.com/analog-nico/hpp
