@@ -33,4 +33,16 @@ const ReviewSchema = new mongoose.Schema({
   },
 });
 
+// The following creates an index on the model, which enforces that
+// each `User` should be able to create at most one `Review` per `Bootcamp`.
+ReviewSchema.index(
+  {
+    bootcamp: 1,
+    user: 1,
+  },
+  {
+    unique: true,
+  }
+);
+
 module.exports = mongoose.model('Review', ReviewSchema);
