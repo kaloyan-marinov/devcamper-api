@@ -262,7 +262,8 @@ rate-limiting is applied
 with the help of https://github.com/express-rate-limit/express-rate-limit
 
 for example,
-issue the following request twice (within no more than 10 minutes of each other):
+issue the following request 100 + 1 times
+(within no more than 10 minutes of each other):
 
 ```bash
 http localhost:5000/api/v1/bootcamps
@@ -276,7 +277,7 @@ HTTP/1.1 200 OK
 # ...
 ```
 
-the backend application will respond to the second request with
+the backend application will respond to the last request with
 (request is rejected):
 
 ```bash
