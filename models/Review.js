@@ -47,7 +47,7 @@ ReviewSchema.index(
 
 // Static method to get average rating and save
 ReviewSchema.statics.getAverageRating = async function (bootcampId) {
-  // console.log('Calculating average rating...'.blue);
+  console.log('Calculating average rating...'.blue);
 
   const objects = await this.aggregate([
     {
@@ -75,7 +75,19 @@ ReviewSchema.statics.getAverageRating = async function (bootcampId) {
 
 // Call getAverageRating after save
 ReviewSchema.post('save', function () {
+  console.log(`ReviewSchema.post('save', ...) - ${this.bootcamp}`);
+
   this.constructor.getAverageRating(this.bootcamp);
 });
+
+ReviewSchema.pre(
+  'deleteOne',
+  { document: true, query: false }, // Added on suggestion by https://github.com/Automattic/mongoose/issues/7538#issuecomment-505275691,
+  function () {
+    console.log(`ReviewSchema.pre('deleteOne', ...) - ${this.bootcamp}`);
+
+    this.constructor.getAverageRating(this.bootcamp);
+  }
+);
 
 module.exports = mongoose.model('Review', ReviewSchema);
