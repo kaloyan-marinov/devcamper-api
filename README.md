@@ -253,3 +253,33 @@ in summary,
 the backend application will no longer naively accept
 scripts or any HTML tags
 that may reach it as values in an HTTP request's body
+
+---
+
+---
+
+rate-limiting is applied
+with the help of https://github.com/express-rate-limit/express-rate-limit
+
+for example,
+issue the following request twice (within no more than 10 minutes of each other):
+
+```bash
+http localhost:5000/api/v1/bootcamps
+```
+
+the backend application will respond to the first request with
+(request is accepted):
+
+```bash
+HTTP/1.1 200 OK
+# ...
+```
+
+the backend application will respond to the second request with
+(request is rejected):
+
+```bash
+HTTP/1.1 429 Too Many Requests
+# ...
+```
