@@ -80,7 +80,7 @@ ReviewSchema.post('save', function () {
   this.constructor.getAverageRating(this.bootcamp);
 });
 
-ReviewSchema.pre(
+ReviewSchema.post(
   'deleteOne',
   { document: true, query: false }, // Added on suggestion by https://github.com/Automattic/mongoose/issues/7538#issuecomment-505275691,
   function () {
