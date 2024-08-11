@@ -150,14 +150,15 @@ http \
 
 ---
 
-as of commit `2dd80d66e99c2c6e4805206797c84027f1301ad0`,
-it is possible for a malicious actor
+as of the commit adding this line,
+it is not possible for a malicious actor
 to obtain an access token associated with _some_ registered `User`
 by simply guessing (the plaintext version of) that `User`'s password;
 more concretely,
-that can be achieved
-via the following <u>NoSQL injection</u> attack
-against the backend application:
+the following <u>NoSQL injection</u> attack
+against the backend application
+will _not_ issue an access token
+(corresponding to a `User` that does exist in the DB):
 
 ```bash
 http \
@@ -168,36 +169,10 @@ http \
 
 # ...
 
-200
+404
 
 {
-    "success": true,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2E1MTRiNWQyYzEyYzc0NDliZTA0MiIsImlhdCI6MTcyMzM4ODc0MSwiZXhwIjoxNzIzMzkyMzQxfQ.j1PmQydXE6dTSXJ5RJCgvo8sZvn8_otyWw35b6SJG14"
-}
-
-# That token corresponds to a `User` that does exist in the DB
-# and
-# can be used by the malicious actor to impersonate that `User`.
-
-export TKN=<the-returned-value>
-
-http \
-  localhost:5000/api/v1/auth/me \
-  Authorization:"Bearer ${TKN}"
-
-# ...
-
-200
-
-{
-    "data": {
-        "__v": 0,
-        "_id": "5d7a514b5d2c12c7449be042",
-        "createdAt": "2024-08-11T14:30:44.468Z",
-        "email": "admin@gmail.com",
-        "name": "Admin Account",
-        "role": "user"
-    },
-    "success": true
+    "error": "Resource not found with id of [object Object]",
+    "success": false
 }
 ```
