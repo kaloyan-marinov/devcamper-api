@@ -291,3 +291,20 @@ HTTP/1.1 429 Too Many Requests
 
 protection against <u>HTTP Parameter Pollution</u> attacks is applied
 with the help of https://github.com/analog-nico/hpp
+
+---
+
+---
+
+if we had this API on one domain
+and we had another domain that we were using,
+we would get a "Cross Origin" error in the web browser
+
+the whole API is made public
+(in the sense that other domains are enabled to connect to this API),
+all of which is achieved
+with the help of https://github.com/expressjs/cors ;
+even more concretely,
+if the API is deployed on domain A
+and some frontend is deployed on domain B,
+the frontend will be able to communicate with the API
