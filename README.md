@@ -172,7 +172,7 @@ http \
 404
 
 {
-    "error": "Resource not found with id of [object Object]",
+    "error": "Resource not found",
     "success": false
 }
 ```
