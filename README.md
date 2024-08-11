@@ -103,7 +103,7 @@ http \
 
 {
     # ...
-                "name": "TEST BOOTCAMP<script>alert(1)</script>",
+                "name": "TEST BOOTCAMP&lt;script>alert(1)&lt;/script>",
 }
 
 export BOOTCAMP_ID=<the-id-of-the-resource-created-by-preceding-request>
@@ -229,29 +229,27 @@ https://github.com/helmetjs/helmet
 
 ---
 
-as of the commit adding this line,
-the backend application opens the door for <u>cross-site-scripting (XSS)</u> attacks;
+<em>
+NB:
+The `xss-clean` "library has been deprecated."</em>
+
+(cf. https://github.com/jsonmaur/xss-clean/tree/6653d5843f8cafd6d82a88431ceaf67c679a6bf6?tab=readme-ov-file#announcement )
+
+as of the commit adding line,
+the backend application closes the door for <u>cross-site-scripting (XSS)</u> attacks;
 more concretely,
-the backend application accepts each and every HTTP request,
-whose body contains a value that in turn contains JavaScript code
+if an HTTP request whose body contains a value
+that in turn contains HTML tags (such as `<script>...</script>` or `<p>...</p>`)
+reaches the backend application,
+then the backend application will sanitize those tags
+before storing them in the database
 
 for proof of that,
 try out the example HTTP request,
 which present in this same file
-and which is modified as part of this same commit
+and which is modified as part of the commit modifying this (sub-)section
 
-if a frontend application embeds such values
-on one of its web pages,
-that would give a mechanism for a malicious actor
-to embed potentially harmful JavaScript code
-into web pages that "regular" `User`s see
-
-(
-as suggested by the previous paragraph,
-there may be some extra - intentional or unintentional! - steps
-that prevent such a mechanism from materializing,
-but we don't want even
-the possiblity of scripts or any HTML tags being
-accepted (by the backend application)
-as values in an HTTP request's body
-)
+in summary,
+the backend application will no longer naively accept
+scripts or any HTML tags
+that may reach it as values in an HTTP request's body
