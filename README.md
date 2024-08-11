@@ -176,3 +176,44 @@ http \
     "success": false
 }
 ```
+
+more details:
+https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb
+
+---
+
+---
+
+as of the commit adding this line,
+the backend application sets additional <u>security headers</u>
+in each of its HTTP responses -
+for example:
+
+```bash
+http \
+  --headers \
+  localhost:5000/api/v1/bootcamps
+
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 7349
+Content-Security-Policy: default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests
+Content-Type: application/json; charset=utf-8
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Date: Sun, 11 Aug 2024 15:30:25 GMT
+ETag: W/"1cb5-lTWmOSEySzlqpeBjitPMoYQQaBY"
+Keep-Alive: timeout=5
+Origin-Agent-Cluster: ?1
+Referrer-Policy: no-referrer
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-DNS-Prefetch-Control: off
+X-Download-Options: noopen
+X-Frame-Options: SAMEORIGIN
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 0
+```
+
+more details:
+https://github.com/helmetjs/helmet
