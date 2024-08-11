@@ -60,6 +60,23 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+const MILLISECONDS_PER_SECOND = 1000;
+
+// @desc      Log user out / clear cookie
+// @route     GET /api/v1/auth/logout
+// @access    Private
+exports.logout = asyncHandler(async (req, res, next) => {
+  res.cookie('token', 'none', {
+    expires: new Date(Date.now() + 10 * MILLISECONDS_PER_SECOND),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    data: {},
+  });
+});
+
 // @desc      Get current logged in user
 // @route     GET /api/v1/auth/me
 // @access    Private
@@ -204,7 +221,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 // const HOURS_PER_DAY = 24;
 const MINUTES_PER_HOUR = 60;
 const SECONDS_PER_MINUTE = 60;
-const MILLISECONDS_PER_SECOND = 1000;
 
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
