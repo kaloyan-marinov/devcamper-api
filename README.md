@@ -87,7 +87,7 @@ http \
   POST \
   localhost:5000/api/v1/bootcamps \
   Authorization:"Bearer ${TKN}" \
-  name="TEST BOOTCAMP" \
+  name="TEST BOOTCAMP<script>alert(1)</script>" \
   description="Devworks is a full stack JavaScript Bootcamp located in the heart of Boston that focuses on the technologies you need to get a high paying job as a web developer" \
   website="https://devworks.com" \
   phone="(111) 111-1111" \
@@ -98,6 +98,13 @@ http \
   jobAssistance:=true \
   jobGuarantee:=false \
   acceptGi:=true
+
+# 201
+
+{
+    # ...
+                "name": "TEST BOOTCAMP<script>alert(1)</script>",
+}
 
 export BOOTCAMP_ID=<the-id-of-the-resource-created-by-preceding-request>
 
@@ -217,3 +224,34 @@ X-XSS-Protection: 0
 
 more details:
 https://github.com/helmetjs/helmet
+
+---
+
+---
+
+as of the commit adding this line,
+the backend application opens the door for <u>cross-site-scripting (XSS)</u> attacks;
+more concretely,
+the backend application accepts each and every HTTP request,
+whose body contains a value that in turn contains JavaScript code
+
+for proof of that,
+try out the example HTTP request,
+which present in this same file
+and which is modified as part of this same commit
+
+if a frontend application embeds such values
+on one of its web pages,
+that would give a mechanism for a malicious actor
+to embed potentially harmful JavaScript code
+into web pages that "regular" `User`s see
+
+(
+as suggested by the previous paragraph,
+there may be some extra - intentional or unintentional! - steps
+that prevent such a mechanism from materializing,
+but we don't want even
+the possiblity of scripts or any HTML tags being
+accepted (by the backend application)
+as values in an HTTP request's body
+)
